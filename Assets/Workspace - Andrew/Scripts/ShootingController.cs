@@ -8,11 +8,13 @@ public class ShootingController : NetworkBehaviour
     public int damage = 25;
     private GameObject character;
     private RaycastHit hitInfo;
+    private AudioSource gunShot;
 
     // Start is called before the first frame update
     void Start()
     {
         character = this.transform.parent.gameObject;
+        gunShot = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -20,7 +22,8 @@ public class ShootingController : NetworkBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            Vector3 directionOfFire = character.transform.forward;
+            gunShot.Play();
+            /*Vector3 directionOfFire = character.transform.forward;
 
             if (Physics.Raycast (transform.position, directionOfFire, out hitInfo, 20))
             {
@@ -29,10 +32,10 @@ public class ShootingController : NetworkBehaviour
                 drawLine((transform.position + hitInfo.point) / 2, hitInfo.point, Color.blue);
                 
                 hitInfo.transform.SendMessage("HitByBullet", damage, SendMessageOptions.DontRequireReceiver);
-            }
+            }*/
         }
     }
-
+    /*
     void drawLine(Vector3 start, Vector3 end, Color color, float duration = 0.02f)
     {
         Debug.Log("Draw line");
@@ -50,5 +53,5 @@ public class ShootingController : NetworkBehaviour
         lr.SetPosition(0, start);
         lr.SetPosition(1, end);
         GameObject.Destroy(myline, duration);
-    }
+    }*/
 }

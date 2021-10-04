@@ -1,12 +1,27 @@
 fileFormatVersion: 2
 guid: 52cf2bd6a28fbce44a59eb14169eeffe
 ModelImporter:
-  serializedVersion: 20200
+  serializedVersion: 21100
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
     second: Take 001
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: healthkit_black
+    second: {fileID: 4362962105363994262, guid: c6005f37a528f2e42bb65d15d9122944, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: healthkit_green
+    second: {fileID: 18858803709778759, guid: d870b4f0cba458640b29cda304d40186, type: 3}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: healthkit_white
+    second: {fileID: 2100000, guid: 5a26de236ce89e94b963be8fa2b7ade6, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -117,7 +132,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0085
+    globalScale: 0.85
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 1
