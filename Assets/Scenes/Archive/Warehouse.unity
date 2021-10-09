@@ -5789,16 +5789,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 555eb42a24a9faf49a3c30f70d5034bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scoreText: {fileID: 625348031}
-  _timerText: {fileID: 1523168828}
+  _scoreText: {fileID: 0}
+  _timerText: {fileID: 0}
   _playerHealth: {fileID: 881847640}
-  _brainHealth: {fileID: 670605833}
-  _borderHealth: {fileID: 113314357}
+  _brainHealth: {fileID: 0}
+  _borderHealth: {fileID: 0}
   _bloodBorders:
   - {fileID: 21300000, guid: d80a2a11f84a72047824580baed5ee7a, type: 3}
   - {fileID: 21300000, guid: 45eb34dbb0f176a4bb56fdec83452ed2, type: 3}
   - {fileID: 21300000, guid: 486a11adbd553c44dbf99c0d18d7e641, type: 3}
   - {fileID: 21300000, guid: 8b799c80befe4d94e98dfbc2fad45b4a, type: 3}
+  _gameplayVariables: {fileID: 0}
+  _pauseMenuVariables: {fileID: 0}
 --- !u!114 &1527447370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6476,6 +6478,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54b1ed43937923745a3657b761c90b0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1668551023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1668551016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8258ea15b8f74c4889ce485d21cbbb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 252
+    i1: 179
+    i2: 52
+    i3: 235
+    i4: 36
+    i5: 122
+    i6: 227
+    i7: 228
+    i8: 136
+    i9: 171
+    i10: 176
+    i11: 129
+    i12: 200
+    i13: 71
+    i14: 207
+    i15: 9
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &1668551024
 MonoBehaviour:
   m_ObjectHideFlags: 0

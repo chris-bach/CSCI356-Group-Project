@@ -14,8 +14,8 @@ public class ZombieHealth : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
-            spawnPoints = FindObjectsOfType<NetworkStartPosition>();
-            target = GetComponent<Rigidbody>();
+            //spawnPoints = FindObjectsOfType<NetworkStartPosition>();
+            //target = GetComponent<Rigidbody>();
         }
     }
 
@@ -27,10 +27,11 @@ public class ZombieHealth : NetworkBehaviour
 
     void HitByBullet(int damage) // process a message HitByBullet
     {
+        /*
         if(!isServer)
         {
             return;
-        }
+        }*/
         
         health -= damage;
 
@@ -38,11 +39,12 @@ public class ZombieHealth : NetworkBehaviour
         {
             Destroy(gameObject);
         }
+        /*
         else
         {
             health = 75;
             RpcRespawn();
-        }
+        }*/
     }
 
     [ClientRpc]

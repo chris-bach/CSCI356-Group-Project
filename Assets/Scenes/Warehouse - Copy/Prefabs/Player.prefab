@@ -671,6 +671,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 5
   mouseSensitivity: 2
+  damage: 100
 --- !u!114 &-4375696810003342266
 MonoBehaviour:
   m_ObjectHideFlags: 0

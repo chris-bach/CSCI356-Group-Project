@@ -18,6 +18,7 @@ public class SoldierController : NetworkBehaviour
     private Camera playerCam;
     private AudioSource gunAudio;
     private RaycastHit hitInfo;
+    private UIManager _uIManager;
     #endregion
 
     #region Combat
@@ -40,6 +41,7 @@ public class SoldierController : NetworkBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         playerCam = GetComponentInChildren<Camera>();
         gunAudio = GetComponent<AudioSource>();
+        _uIManager = GetComponent<UIManager>();
     }
 
     // Update is called once per frame
@@ -86,6 +88,8 @@ public class SoldierController : NetworkBehaviour
         if (Input.GetKeyDown("escape"))
         {
             Cursor.lockState = CursorLockMode.None;
+            _uIManager.SetActiveGameplay(false);
+            _uIManager.SetActivePauseMenu(true);
         }
     }
 

@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image _brainHealth;
     [SerializeField] private Image _borderHealth;
     [SerializeField] private Sprite[] _bloodBorders;
+    [SerializeField] private GameObject _gameplayVariables;
+    [SerializeField] private GameObject _pauseMenuVariables;
 
     // Start is called before the first frame update
     void Start()
@@ -48,5 +50,28 @@ public class UIManager : MonoBehaviour
     public void UpdateSoldierHealth(int currentHealth)
     {
         _playerHealth.sizeDelta = new Vector2(currentHealth, _playerHealth.sizeDelta.y);
+    }
+
+    public void SetActiveGameplay(bool value)
+    {
+        if(value == true)
+        {
+            _gameplayVariables.SetActive(true);
+        } else
+        {
+            _gameplayVariables.SetActive(false);
+        }
+    }
+
+    public void SetActivePauseMenu(bool value)
+    {
+        if (value == true)
+        {
+            _pauseMenuVariables.SetActive(true);
+        }
+        else
+        {
+            _pauseMenuVariables.SetActive(false);
+        }
     }
 }

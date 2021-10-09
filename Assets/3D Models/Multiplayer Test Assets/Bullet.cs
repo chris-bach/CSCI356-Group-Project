@@ -15,10 +15,5 @@ public class Bullet : MonoBehaviour
     {
         
     }
-    void OnCollisionEnter(Collider coll){
-        if(coll.tag == "Zombie"){
-            Destroy(gameObject);
-        }
-    	
-    }
+   
 }
