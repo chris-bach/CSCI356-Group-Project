@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text _scoreText;
     [SerializeField] private Text _timerText;
     [SerializeField] private RectTransform _playerHealth;
-    [SerializeField] private Image _brainHealth;
+    [SerializeField] private RectTransform _brainHealth;
     [SerializeField] private Image _borderHealth;
     [SerializeField] private Sprite[] _bloodBorders;
     [SerializeField] private GameObject _gameplayVariables;
@@ -50,6 +50,11 @@ public class UIManager : MonoBehaviour
     public void UpdateSoldierHealth(int currentHealth)
     {
         _playerHealth.sizeDelta = new Vector2(currentHealth, _playerHealth.sizeDelta.y);
+    }
+
+    public void UpdateBrainHealth(int currentHealth)
+    {
+        _brainHealth.sizeDelta = new Vector2(currentHealth, _brainHealth.sizeDelta.y);
     }
 
     public void SetActiveGameplay(bool value)

@@ -6,72 +6,90 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour{
     public delegate void EnemyKilled();
     public static event EnemyKilled OnEnemyKilled;
+    public int health = 75;
+    public float attackDamage = 10;
+    private Rigidbody rb;
 
 	private NavMeshAgent nm;
 	public Transform target;
+    public Transform brain;
     [SerializeField] private float viewDistance = 5F;
     [SerializeField] private float attackDistance = 1f;
-	public enum AIState{idle,running,attacking}
-	public AIState aiState = AIState.idle;
+	public enum AIState{target_brain,target_player,attacking_player,attacking_brain,death}
+	public AIState aiState = AIState.target_brain;
 	Animator charAnim;
 
     void Start(){
     	charAnim = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        brain = GameObject.FindGameObjectWithTag("Brain").transform;
     	nm = GetComponent<UnityEngine.AI.NavMeshAgent>();
     	StartCoroutine(Think());
+        rb = GetComponent<Rigidbody>();
     }
 
-    void Update(){
-        
+
+    void HitByBullet(int damage){
+        health -= damage;
+        if (health < 1) aiState = AIState.death;
     }
+
 
     IEnumerator Think(){
     	while(true){
-    		float dist = Vector3.Distance(target.position,transform.position);
+            //If a player exists, check whether they are within range for attacking
+            if(target != null){
+                float playerDistance = Vector3.Distance(target.position,transform.position);
+                float brainDistance = Vector3.Distance(brain.position,transform.position);          
 
-            switch (aiState) {
-                case AIState.idle:
-                    if (dist < viewDistance) aiState = AIState.running;
-                    charAnim.SetTrigger("Idle");
-                    nm.SetDestination(transform.position);
-                    break;
-                case AIState.running:
-                    nm.SetDestination(target.position);
-                    charAnim.SetTrigger("Running");
-                    if (dist > viewDistance) {
-                        aiState = AIState.idle;
-                    }
-                    else if (dist < attackDistance)
-                    {
-                        aiState = AIState.attacking;
-                    }
-                    break;
-                case AIState.attacking:
-                    if (dist < attackDistance) aiState = AIState.attacking;
-                    charAnim.SetTrigger("Attacking");
-                    Destroy(gameObject);
+                switch (aiState) {
+                    case AIState.target_brain:
+                        //Target the brain first!
+                        nm.SetDestination(brain.position);
+                        charAnim.SetTrigger("Running");
+                        //Check if the brain is within attacking distance, if it is, attack
+                        if (brainDistance < attackDistance) aiState = AIState.attacking_brain;
+                        //Check if player is closer than the brain, if the player is, target the player
+                        if(playerDistance < brainDistance) aiState = AIState.target_player;
+                        break;
+                    case AIState.target_player:
+                        //Target the player first
+                        nm.SetDestination(target.position);
+                        charAnim.SetTrigger("Running");
+                        //Check if the player is within attacking distance, if it is, attack
+                        if(playerDistance < attackDistance) aiState = AIState.attacking_player;
+                        //Check if the brain is closer, if so, target it instead
+                        if(brainDistance < playerDistance) aiState = AIState.target_brain;
+                        break;
+                    case AIState.attacking_brain:
+                        //Attack the brain!
+                        brain.SendMessage("dealDamage",attackDamage);
+                        charAnim.SetTrigger("Attacking");
+                        //ADD SOMETHING HERE TO HANDLE THE BRAIN BEING DESTROYED!!
+                        break;
+                    case AIState.attacking_player:
+                        //Attack the player
+                        charAnim.SetTrigger("Attacking");
+                        transform.rotation = Quaternion.RotateTowards(transform.rotation, target.transform.rotation, Time.deltaTime * 1);
+                        //If the player is out of attack range, chase the player
+                        if(playerDistance > attackDistance) aiState = AIState.target_player;
+                        //If the player somehow escapes quickly, forget the player and go for the brain
+                        if(playerDistance > viewDistance) aiState = AIState.target_brain;
+                        break;
+                    case AIState.death:
+                        charAnim.SetTrigger("Falling");
+                        for (int i = 0; i < 3; i++) gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                        nm.SetDestination(transform.position);
+                        Destroy(gameObject,3F);
+                        break;
+                }
+            }
+            //Otherwise target the brain immediately
+            yield return new WaitForSeconds(0.1F);
+        }
 
-
-                    if(OnEnemyKilled != null){
-                        OnEnemyKilled();
-                    }
-                    /*
-                    if (dist > viewDistance)
-                    {
-                        aiState = AIState.idle;
-                    }
-                    else if (dist < viewDistance && dist > attackDistance)
-                    {
-                        aiState = AIState.running;
-                    }*/
-                    break;
-                default:
-    				break;
-    		}
-    		//Wait for 1 second and then go through the loop again, more efficient than updating every frame
-    		yield return new WaitForSeconds(0.2F);
-    	}
+        	
+        
     }
 
 }
