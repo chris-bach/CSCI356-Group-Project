@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,22 +12,37 @@ public class UIManager : MonoBehaviour
     [SerializeField] private RectTransform _brainHealth;
     [SerializeField] private Image _borderHealth;
     [SerializeField] private Sprite[] _bloodBorders;
-    [SerializeField] private GameObject _gameplayVariables;
-    [SerializeField] private GameObject _pauseMenuVariables;
+    public static int seconds = -1;
+    public static int kills = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        _scoreText.text = "SCORE: " + 0;
-        _timerText.text = "TIME LEFT: " + 300;
+        _scoreText.text = "TOTAL SCORE: " + 0;
+        _timerText.text = "TIME SURVIVED: " + 0;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    void Awake(){
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
     }
-
+    
+    void OnSceneLoaded(Scene aScene, LoadSceneMode aMode){
+        if(aScene.name == "Warehouse - Copy" && this != null) {
+            seconds = -1;
+            kills = 0;
+            StartCoroutine(Timer());
+        }
+    }
+    IEnumerator Timer(){
+        seconds++;
+        _timerText.text = "TIME SURVIVED: " + seconds;
+        yield return new WaitForSeconds(1F);
+        StartCoroutine(Timer());
+    }
+    public void updateKillCount(){
+        kills++;
+        _scoreText.text = "TOTAL SCORE: " + kills;
+    }
     public void UpdateBorders(int currentHealth)
     {
         if(currentHealth > 90)
@@ -55,28 +71,5 @@ public class UIManager : MonoBehaviour
     public void UpdateBrainHealth(int currentHealth)
     {
         _brainHealth.sizeDelta = new Vector2(currentHealth, _brainHealth.sizeDelta.y);
-    }
-
-    public void SetActiveGameplay(bool value)
-    {
-        if(value == true)
-        {
-            _gameplayVariables.SetActive(true);
-        } else
-        {
-            _gameplayVariables.SetActive(false);
-        }
-    }
-
-    public void SetActivePauseMenu(bool value)
-    {
-        if (value == true)
-        {
-            _pauseMenuVariables.SetActive(true);
-        }
-        else
-        {
-            _pauseMenuVariables.SetActive(false);
-        }
     }
 }

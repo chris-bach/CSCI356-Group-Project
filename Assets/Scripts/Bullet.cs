@@ -9,6 +9,6 @@ public class Bullet : MonoBehaviour{
     		coll.gameObject.SendMessage("HitByBullet", damage, SendMessageOptions.DontRequireReceiver);
     		Destroy(gameObject);
     	}
-    	Destroy(gameObject,2);
+    	Destroy(gameObject, 1);
     }
 }

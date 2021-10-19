@@ -19,12 +19,14 @@ public class BrainHealth : MonoBehaviour
 
         _uiManager.UpdateBrainHealth(health);
     }
-
     void dealDamage(float damage){
         health -= (int) damage;
         _uiManager.UpdateBrainHealth(health);
-        if(health <= 0) SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
-        
+        if (health <= 0)
+        {
+            SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
     
 }

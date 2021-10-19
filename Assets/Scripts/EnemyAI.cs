@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -10,6 +10,8 @@ public class EnemyAI : MonoBehaviour{
     public float attackDamage = 10;
     private Rigidbody rb;
 
+    private bool isDead = false;
+    private UIManager _uiManager;
 	private NavMeshAgent nm;
 	public Transform target;
     public Transform brain;
@@ -20,6 +22,7 @@ public class EnemyAI : MonoBehaviour{
 	Animator charAnim;
 
     void Start(){
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
     	charAnim = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
         brain = GameObject.FindGameObjectWithTag("Brain").transform;
@@ -65,10 +68,10 @@ public class EnemyAI : MonoBehaviour{
                         //Attack the brain!
                         brain.SendMessage("dealDamage",attackDamage);
                         charAnim.SetTrigger("Attacking");
-                        //ADD SOMETHING HERE TO HANDLE THE BRAIN BEING DESTROYED!!
                         break;
                     case AIState.attacking_player:
                         //Attack the player
+                        target.SendMessage("dealDamage",attackDamage);
                         charAnim.SetTrigger("Attacking");
                         transform.rotation = Quaternion.RotateTowards(transform.rotation, target.transform.rotation, Time.deltaTime * 1);
                         //If the player is out of attack range, chase the player
@@ -80,6 +83,10 @@ public class EnemyAI : MonoBehaviour{
                         charAnim.SetTrigger("Falling");
                         for (int i = 0; i < 3; i++) gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                         nm.SetDestination(transform.position);
+                        if(!isDead){
+                            _uiManager.SendMessage("updateKillCount");
+                            isDead = true;
+                        }
                         Destroy(gameObject,3F);
                         break;
                 }
