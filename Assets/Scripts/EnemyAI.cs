@@ -80,6 +80,7 @@ public class EnemyAI : MonoBehaviour{
                         if(playerDistance > viewDistance) aiState = AIState.target_brain;
                         break;
                     case AIState.death:
+                        this.GetComponent<Collider>().enabled = !this.GetComponent<Collider>().enabled;
                         charAnim.SetTrigger("Falling");
                         for (int i = 0; i < 3; i++) gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                         nm.SetDestination(transform.position);

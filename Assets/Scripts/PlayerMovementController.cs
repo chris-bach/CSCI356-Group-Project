@@ -38,9 +38,6 @@ public class PlayerMovementController : MonoBehaviour
     	}
     	if(Input.GetKey(KeyCode.LeftShift)) moveSpeed = sprintSpeed;
     	else moveSpeed = walkSpeed;
-
-
-         
     
         float mvX = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeed;
     	float mvZ = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeed;

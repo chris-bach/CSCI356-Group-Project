@@ -75,6 +75,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: -2074141922254739459, guid: bff3787da8012904f9931c65fd1e326a, type: 3}
   magnitude: 25
+  _pauseMenu: {fileID: 0}
 --- !u!1 &3579632908919627424
 GameObject:
   m_ObjectHideFlags: 0

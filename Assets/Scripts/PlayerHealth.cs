@@ -48,6 +48,7 @@ public class PlayerHealth : MonoBehaviour{
         if(health <= 0 && !despawned){
             despawned = true;
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>().enabled = false;
+            GameObject.FindGameObjectWithTag("BrainCam").GetComponent<Camera>().enabled = true;
             transform.position = new Vector3(10000,10000,10000);
             //Wait for the respawn cooldown
             yield return new WaitForSeconds(respawnCoolDown);
@@ -55,6 +56,7 @@ public class PlayerHealth : MonoBehaviour{
             health = 50;
             _uiManager.UpdateSoldierHealth(health);
             respawnCoolDown *= 2;
+            GameObject.FindGameObjectWithTag("BrainCam").GetComponent<Camera>().enabled = false;
             GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>().enabled = true;
             transform.position = m_SpawnPoints[Mathf.RoundToInt(Random.Range(0f,m_SpawnPoints.Length-1))].transform.position;
             despawned = false;
