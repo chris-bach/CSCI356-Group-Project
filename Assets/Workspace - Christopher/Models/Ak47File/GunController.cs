@@ -26,17 +26,18 @@ public class GunController : MonoBehaviour
     public Vector2 randomRecoilConstraints;
     //You only need to assign this if randomize recoil is off
     public Vector2[] recoilPattern;
+    public GameHUD _pauseMenu;
 
 
     private void Update()
     {
         DetermineAim();
-        DetermineRotation();
+        //DetermineRotation();
 
-        if(Input.GetButtonDown("Fire1")) StartCoroutine(ShootGun());
+        if(Input.GetButtonDown("Fire1") && !_pauseMenu.GamePaused) StartCoroutine(ShootGun());
         
     }
-
+    /*
     private void DetermineRotation()
     {
         Vector2 mouseAxis = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
@@ -52,7 +53,7 @@ public class GunController : MonoBehaviour
         transform.parent.localRotation = Quaternion.AngleAxis(-_currentRotation.y, Vector3.right);
 
 
-    }
+    }*/
     private void DetermineAim()
     {
         Vector3 target = normalLocalPosition;

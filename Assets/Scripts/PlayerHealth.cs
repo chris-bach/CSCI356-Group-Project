@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour{
-    [SerializeField] private int health = 120;
+    [SerializeField] private float health = 120;
     private UIManager _uiManager;
     public Transform[] m_SpawnPoints;
     public float respawnCoolDown = 1F;
@@ -40,7 +40,7 @@ public class PlayerHealth : MonoBehaviour{
     }
     IEnumerator dealDamage(float damage){
         //Decrement health and update player HUD
-        health = health - (int) damage;
+        health = health - damage;
         _uiManager.UpdateSoldierHealth(health);
         _uiManager.UpdateBorders(health);
         //If player dies and they aren't already despawned then disable the player's camera and 

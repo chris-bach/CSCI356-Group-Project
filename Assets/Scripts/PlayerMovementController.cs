@@ -4,44 +4,42 @@ using UnityEngine;
 
 public class PlayerMovementController : MonoBehaviour
 {
-	public float walkSpeed = 5.0F;
-	private float moveSpeed;
-	public float sprintSpeed;
-	public Vector3 jumpParameters;
-	public bool isGrounded; 
-	public float jumpPower = 2F;
-	public Rigidbody player;
+    float moveForward;
+    float moveSide;
+    float moveUp;
 
-	private AudioSource gunAudio;
-    // Start is called before the first frame update
-    void Start()
-    {
+    bool isGrounded;
+
+    public GameHUD _pauseMenu;
+    public float walkSpeed = 1f;
+    public float sprintSpeed = 2f;
+    private float moveSpeed;
+    public float jumpPower = 5f;
+    Rigidbody player;
+    private AudioSource gunAudio;
+    
+    void Start(){
         gunAudio = GetComponent<AudioSource>();
         player = GetComponent<Rigidbody>();
-        jumpParameters = new Vector3(0F,2F,0F);
-        sprintSpeed = walkSpeed * 2;
-    }
-    void OnCollisionStay(){
-    	isGrounded = true;
-    }
-    void OnCollisionExit(){
-    	isGrounded = false;
+        moveSpeed = walkSpeed;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    	if (Input.GetButtonDown("Fire1")) gunAudio.Play();
-    	if(Input.GetKeyDown(KeyCode.Space) && isGrounded){
-    		player.AddForce(jumpParameters * jumpPower,ForceMode.Impulse);
-    		isGrounded = false;
-    	}
-    	if(Input.GetKey(KeyCode.LeftShift)) moveSpeed = sprintSpeed;
-    	else moveSpeed = walkSpeed;
-    
-        float mvX = Input.GetAxis("Horizontal") * Time.deltaTime * moveSpeed;
-    	float mvZ = Input.GetAxis("Vertical") * Time.deltaTime * moveSpeed;
-
-    	transform.Translate(mvX,0,mvZ);
+    void Update(){
+        if (Input.GetButtonDown("Fire1") && !_pauseMenu.GamePaused) gunAudio.Play();
+        if(Input.GetKey(KeyCode.LeftShift)) moveSpeed = sprintSpeed;
+        else moveSpeed = walkSpeed;
+        moveForward = Input.GetAxisRaw("Vertical") * moveSpeed;
+        moveSide = Input.GetAxisRaw("Horizontal") * moveSpeed;
+        moveUp = Input.GetAxisRaw("Jump") * jumpPower;
+    }
+    private void FixedUpdate(){
+        player.velocity = (transform.forward * moveForward) + (transform.right * moveSide) + (transform.up * player.velocity.y);
+        if(isGrounded && moveUp != 0){
+            player.AddForce(transform.up * moveUp, ForceMode.VelocityChange);
+            isGrounded = false;
+        }
+    }
+    private void OnCollisionEnter(Collision coll){
+        isGrounded = true;
     }
 }

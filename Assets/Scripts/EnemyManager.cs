@@ -8,9 +8,9 @@ public class EnemyManager : MonoBehaviour
     public GameObject m_EnemyPrefab;
     [SerializeField] private GameObject _enemyContainer;
     private GameObject enemy;
-    public int enemiesToSpawn = 10;
-    public int enemySpawnIncrement = 5;
-    public float spawnTime = 15;
+    public int enemiesToSpawn;
+    public int enemySpawnIncrement;
+    public float spawnTime;
 
     void Awake(){
     	UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
@@ -31,11 +31,10 @@ public class EnemyManager : MonoBehaviour
             enemiesToSpawn += enemySpawnIncrement;
         }
         catch{
-            //We should probably fix this issue rather than just catching it, lol 
             print("Error caught");
         }
         yield return new WaitForSeconds(spawnTime);
-        spawnTime -= 2;
+        spawnTime -= 1;
         StartCoroutine(SpawnEnemies());
         
     }

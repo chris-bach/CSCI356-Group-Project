@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class BrainHealth : MonoBehaviour
 {
-    [SerializeField] private int health = 120;
+    [SerializeField] private float health = 120;
     private UIManager _uiManager;
 
     // Start is called before the first frame update
@@ -20,7 +20,7 @@ public class BrainHealth : MonoBehaviour
         _uiManager.UpdateBrainHealth(health);
     }
     void dealDamage(float damage){
-        health -= (int) damage;
+        health -= damage;
         _uiManager.UpdateBrainHealth(health);
         if (health <= 0)
         {

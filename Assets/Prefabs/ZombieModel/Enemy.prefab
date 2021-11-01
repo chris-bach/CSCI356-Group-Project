@@ -675,7 +675,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 75
-  attackDamage: 1
+  attackDamage: 0.35
   target: {fileID: 0}
   brain: {fileID: 0}
   viewDistance: 30

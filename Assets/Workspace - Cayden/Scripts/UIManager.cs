@@ -43,7 +43,7 @@ public class UIManager : MonoBehaviour
         kills++;
         _scoreText.text = "TOTAL SCORE: " + kills;
     }
-    public void UpdateBorders(int currentHealth)
+    public void UpdateBorders(float currentHealth)
     {
         if(currentHealth > 90)
         {
@@ -63,12 +63,12 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void UpdateSoldierHealth(int currentHealth)
+    public void UpdateSoldierHealth(float currentHealth)
     {
         _playerHealth.sizeDelta = new Vector2(currentHealth, _playerHealth.sizeDelta.y);
     }
 
-    public void UpdateBrainHealth(int currentHealth)
+    public void UpdateBrainHealth(float currentHealth)
     {
         _brainHealth.sizeDelta = new Vector2(currentHealth, _brainHealth.sizeDelta.y);
     }
